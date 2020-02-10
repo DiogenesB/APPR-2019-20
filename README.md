@@ -5,7 +5,6 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2018/19
 * [![Shiny](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/DiogenesB/APPR-2018-19/master?urlpath=shiny/APPR-2018-19/projekt.Rmd) Shiny
 * [![RStudio](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/DiogenesB/APPR-2018-19/master?urlpath=rstudio) RStudio
 
-## Tematikas
 
 ### Kaj sploh je Olist?
 Olist je brazilska platforma, ki omogoča malim podjetjem vzpostaviti prodajne kanale preko njihove spletne strani ("brazilski ebay"). Podjetje lahko svoje izdelke prodaja preko Olist Store trgovine, svoje izdelke pa pošilja preko logističnih partnerjev Olist-a.
