@@ -34,7 +34,7 @@ Izvedel sem analizo poslovanja na platformi Olist. Platforma Olist prodajalcem p
 # Obdelava, uvoz in čiščenje podatkov
 
 ```{r uvoz, echo=FALSE, message=FALSE, warning=FALSE}
-source("uvoz/testniuvoz.r", encoding="UTF-8")
+source("uvoz/uvoz.r", encoding="UTF-8")
 ```
 
 Podatke sem uvozil v obliki 4 različnih CSV datotek, ki so zdaj v 2 razpredelnicah v obliki *tidy data*.
