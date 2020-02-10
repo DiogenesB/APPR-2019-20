@@ -18,7 +18,10 @@ graf_promet <- ggplot(promet_2017, aes(x = promet_2017$mesec.dostave, y = promet
 graf_tipi <- ggplot(narocila, aes(narocila$tip.placila)) + geom_bar() +
   labs(title = "Plačilna sredstva", x = "Tip plačilnega sredstva", y = "Število nakupov") + scale_x_discrete() + coord_flip()
 
-graf_gostot <- ggplot(narocila, aes(x = narocila$vrednost.placila, color=narocila$tip.placila)) + geom_density()  + scale_x_log10()
+graf_gostot <- ggplot(narocila, aes(x = narocila$vrednost.placila, color=narocila$tip.placila)) +
+  geom_density()  +
+  scale_x_log10() +
+  labs(title = "Gostota cen glede na plačilno sredstvo", x = "Gostota", y = "Vrednost plačila")
 
 graf_december <- ggplot(december, aes(x=december$dan.narocila, y = december$vrednost.placila)) + geom_col() +
   labs(title = "Pregled prometa v decembru 2017", x = "Dan", y = "Skupni promet") + scale_x_continuous(breaks = 1:31)
