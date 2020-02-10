@@ -84,7 +84,9 @@ graf_december
 graf_november
 ```
 
-
+```{r zemljevid, echo=FALSE, message=FALSE}
+map
+```
 
 
 
