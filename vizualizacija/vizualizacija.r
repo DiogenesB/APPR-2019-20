@@ -30,13 +30,13 @@ graf_november <- ggplot(november, aes(x=november$dan.narocila, y=november$vredno
 # TODO: popravi pozicioniranje grafov
 
 
-brazilija <- uvozi.zemljevid("https://biogeo.ucdavis.edu/data/gadm3.6/shp/gadm36_BRA_shp.zip", "gadm36_BRA_0", force=TRUE) %>% fortify()
+#brazilija <- uvozi.zemljevid("https://biogeo.ucdavis.edu/data/gadm3.6/shp/gadm36_BRA_shp.zip", "gadm36_BRA_0", force=TRUE) %>% fortify()
 
 
-map <- ggplot(brazilija, aes(x=long, y=lat)) +
-  geom_polygon(aes(group=group)) +
-  geom_point(aes(x=lokacija_prodajalcev$zemljepisna.dolzina, y=lokacija_prodajalcev$zemljepisna.sirina), lokacija_prodajalcev, col="red") +
-  geom_point(aes(x=lokacija_kupcev$zemljepisna.dolzina, y=lokacija_kupcev$zemljepisna.sirina), lokacija_kupcev, col="blue")
-  labs(title ="Vizualizacija prodajalcev in kupcev") 
+#map <- ggplot(brazilija, aes(x=long, y=lat)) +
+#  geom_polygon(aes(group=group)) +
+#  geom_point(aes(x=lokacija_prodajalcev$zemljepisna.dolzina, y=lokacija_prodajalcev$zemljepisna.sirina), lokacija_prodajalcev, col="red") +
+#  geom_point(aes(x=lokacija_kupcev$zemljepisna.dolzina, y=lokacija_kupcev$zemljepisna.sirina), lokacija_kupcev, col="blue")
+#  labs(title ="Vizualizacija prodajalcev in kupcev") 
 
 
