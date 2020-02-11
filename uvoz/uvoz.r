@@ -5,9 +5,6 @@ library(ggplot2)
 library(lubridate)
 
 
-## TODO dplyr 
-## TODO dodaj tabele za zemljevide
-
 #Uvoz prve tabele
 stolpci_1 <- c("kljuc.narocila", "kljuc.uporabnika", "status.narocila", "cas.nakupa", 
                "odobren.cas.nakupa", "cas.ko.je.posiljko.prejel.partner", "dejanski.cas.dostave", "predviden.cas.dostave" )
@@ -45,7 +42,15 @@ stolpci_6 <- c("kljuc.prodajalca", "postna.stevilka", "mesto", "zvezna.drzava")
 tabela_prodajalcev <- read_csv("podatki/olist_sellers_dataset.csv", na = c("", " ", "NA"))
 tabela_prodajalcev <- tabela_prodajalcev %>% drop_na
 colnames(tabela_prodajalcev) <- stolpci_6
-  
+
+#Uvoz sedme tabele
+stolpci_7 <- c("kljuc.uporabnika", "unikaten.kljuc.uporabnika", "postna.stevilka", "mesto", "zvezna.drzava")
+tabela_kupcev <- read_csv("podatki/olist_customers_dataset.csv", na = c("", " ", "NA"))
+tabela_kupcev <- tabela_kupcev %>% drop_na()
+colnames(tabela_kupcev) <- stolpci_7
+
+
+
 
 #Združevanje 1. in 2. tabele
 narocila <- left_join(tabela_narocil, tabela_vrst_placil, by = c("kljuc.narocila"), copy=FALSE)
@@ -65,6 +70,12 @@ izdelki <- izdelki %>%
 #Združevanje 5. in 6. tabele
 lokacija_prodajalcev <- left_join(tabela_prodajalcev, tabela_lokacij, by = c("postna.stevilka" = "postna.stevilka", "mesto" = "mesto", "zvezna.drzava" = "zvezna.drzava"), copy=FALSE)
 lokacija_prodajalcev <- lokacija_prodajalcev %>%
+  drop_na()
+
+
+#Združevanje 5. in 7. tabele
+lokacija_kupcev <- left_join(tabela_kupcev, tabela_lokacij, by = c("postna.stevilka" = "postna.stevilka", "mesto" = "mesto", "zvezna.drzava" = "zvezna.drzava"), copy=FALSE)
+lokacija_kupcev <- lokacija_kupcev %>%
   drop_na()
 
  
