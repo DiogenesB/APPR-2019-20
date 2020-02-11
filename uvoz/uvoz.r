@@ -27,11 +27,25 @@ stolpci_3 <- c("kljuc.izdelka", "kategorija.izdelka", "dolzina.naziva.izdelka", 
 tabela_produktov <- read_csv("podatki/olist_products_dataset.csv", na = c("", " ", "NA")) %>% drop_na() 
 colnames(tabela_produktov) <- stolpci_3
 
+
 #Uvoz četrte tabele
 stolpci_4 <- c("original", "prevod")
 tabela_prevodov <- read_csv("podatki/product_category_name_translation.csv")
 colnames(tabela_prevodov) <- stolpci_4
 
+
+#Uvoz pete tabele
+stolpci_5 <- c("postna.stevilka", "zemljepisna.sirina", "zemljepisna.dolzina", "mesto", "zvezna.drzava")
+tabela_lokacij <- read_csv("podatki/olist_geolocation_dataset.csv", na = c("", " ", "NA"))
+tabela_lokacij <- tabela_lokacij %>% drop_na()
+colnames(tabela_lokacij) <- stolpci_5
+
+#Uvoz šeste tabele
+stolpci_6 <- c("kljuc.prodajalca", "postna.stevilka", "mesto", "zvezna.drzava")
+tabela_prodajalcev <- read_csv("podatki/olist_sellers_dataset.csv", na = c("", " ", "NA"))
+tabela_prodajalcev <- tabela_prodajalcev %>% drop_na
+colnames(tabela_prodajalcev) <- stolpci_6
+  
 
 #Združevanje 1. in 2. tabele
 narocila <- left_join(tabela_narocil, tabela_vrst_placil, by = c("kljuc.narocila"), copy=FALSE)
@@ -46,6 +60,10 @@ izdelki <- left_join(tabela_produktov, tabela_prevodov, by = c("kategorija.izdel
 izdelki <- izdelki %>%
   select(-dolzina.naziva.izdelka, -dolzina.opisa.izdelka, -stevilo.objavljenih.fotografij.izdelka, -kategorija.izdelka) %>%
   rename("kategorija.izdelka" = prevod)
+
+#Združevanje 5. in 6. tabele
+lokacija_prodajalcev <- left_join(tabela_prodajalcev, tabela_lokacij, by = c("postna.stevilka" = "postna.stevilka", "mesto" = "mesto", "zvezna.drzava" = "zvezna.drzava"), copy=FALSE)
+
  
 
 #Tabela ki opisuje promet na platformi v letu 2017
