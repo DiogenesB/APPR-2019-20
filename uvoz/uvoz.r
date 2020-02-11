@@ -61,11 +61,13 @@ izdelki <- izdelki %>%
   select(-dolzina.naziva.izdelka, -dolzina.opisa.izdelka, -stevilo.objavljenih.fotografij.izdelka, -kategorija.izdelka) %>%
   rename("kategorija.izdelka" = prevod)
 
+
 #Združevanje 5. in 6. tabele
 lokacija_prodajalcev <- left_join(tabela_prodajalcev, tabela_lokacij, by = c("postna.stevilka" = "postna.stevilka", "mesto" = "mesto", "zvezna.drzava" = "zvezna.drzava"), copy=FALSE)
+lokacija_prodajalcev <- lokacija_prodajalcev %>%
+  drop_na()
 
  
-
 #Tabela ki opisuje promet na platformi v letu 2017
 promet_2017 <- narocila %>%
   select(dejanski.cas.dostave, vrednost.placila) %>%
