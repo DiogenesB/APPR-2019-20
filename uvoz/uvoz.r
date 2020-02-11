@@ -4,6 +4,10 @@ library(dplyr)
 library(ggplot2)
 library(lubridate)
 
+
+## TODO dplyr 
+## TODO dodaj tabele za zemljevide
+
 #Uvoz prve tabele
 stolpci_1 <- c("kljuc.narocila", "kljuc.uporabnika", "status.narocila", "cas.nakupa", 
                "odobren.cas.nakupa", "cas.ko.je.posiljko.prejel.partner", "dejanski.cas.dostave", "predviden.cas.dostave" )
@@ -31,15 +35,18 @@ colnames(tabela_prevodov) <- stolpci_4
 
 #Združevanje 1. in 2. tabele
 narocila <- left_join(tabela_narocil, tabela_vrst_placil, by = c("kljuc.narocila"), copy=FALSE)
-narocila <- narocila %>% drop_na()
-narocila$status.narocila <- as.factor(narocila$status.narocila)
-narocila$tip.placila <- as.factor(narocila$tip.placila)
-narocila$zaporedje.placila <- NULL
-narocila$kljuc.uporabnika <- NULL
-narocila$odobren.cas.nakupa <- NULL
-narocila$cas.ko.je.posiljko.prejel.partner <- NULL
-narocila$pravocasnost = narocila$predviden.cas.dostave >= narocila$dejanski.cas.dostave
+narocila <- narocila %>% 
+  drop_na() %>%
+  select(-zaporedje.placila, -kljuc.uporabnika, -odobren.cas.nakupa, -cas.ko.je.posiljko.prejel.partner) %>%
+  mutate(pravocasnost = predviden.cas.dostave >= dejanski.cas.dostave, status.narocila = as.factor(status.narocila))
 
+
+#Združevanje 3. in 4. tabele
+izdelki <- left_join(tabela_produktov, tabela_prevodov, by = c("kategorija.izdelka"="original"), copy=FALSE)
+izdelki <- izdelki %>%
+  select(-dolzina.naziva.izdelka, -dolzina.opisa.izdelka, -stevilo.objavljenih.fotografij.izdelka, -kategorija.izdelka) %>%
+  rename("kategorija.izdelka" = prevod)
+ 
 
 #Tabela ki opisuje promet na platformi v letu 2017
 promet_2017 <- narocila %>%
@@ -68,12 +75,3 @@ november <- narocila %>%
   select(dan.narocila, vrednost.placila) %>%
   group_by(dan.narocila) %>%
   summarise(vrednost.placila = sum(vrednost.placila))
-
-
-#Združevanje 3. in 4. tabele
-izdelki <- left_join(tabela_produktov, tabela_prevodov, by = c("kategorija.izdelka"="original"), copy=FALSE)
-izdelki$kategorija.izdelka <- NULL
-izdelki$dolžina.naziva.izdelka <- NULL
-izdelki$dolžina.opisa.izdelka<- NULL
-izdelki$število.objavljenih.fotografij.izdelka <- NULL
-names(izdelki)[6] <- c("kategorija.izdelka")
