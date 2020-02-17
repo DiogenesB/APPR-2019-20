@@ -1,11 +1,3 @@
-# 4. faza: Analiza podatkov
-
-podatki <- obcine %>% transmute(obcina, povrsina, gostota,
-                                gostota.naselij=naselja/povrsina) %>%
-  left_join(povprecja, by="obcina")
-row.names(podatki) <- podatki$obcina
-podatki$obcina <- NULL
-
-# Število skupin
-n <- 5
-skupine <- hclust(dist(scale(podatki))) %>% cutree(n)
+##TODO regresija
+##TODO cluster analiza kupcev na zemljevidu
+##TODO regresija glede na dolžino in širino (zemljepisno) in kako dolgo je trajalo da je paket prišel
