@@ -47,8 +47,13 @@ brazilija <- uvozi.zemljevid("https://biogeo.ucdavis.edu/data/gadm3.6/shp/gadm36
 
 map <- ggplot(brazilija, aes(x=long, y=lat)) +
   geom_polygon(aes(group=group)) +
-  geom_point(aes(x=lokacija_prodajalcev$zemljepisna.dolzina, y=lokacija_prodajalcev$zemljepisna.sirina), lokacija_prodajalcev, col="red") +
-  #geom_point(aes(x=lokacija_kupcev$zemljepisna.dolzina, y=lokacija_kupcev$zemljepisna.sirina), lokacija_kupcev, col="blue")
+  geom_point(aes(x=zemljepisna.dolzina, y=zemljepisna.sirina), data = lokacija_prodajalcev, col="red") +
+  geom_point(aes(x=zemljepisna.dolzina, y=zemljepisna.sirina), data = distinct(select(lokacija_kupcev, kljuc.uporabnika, zemljepisna.sirina, zemljepisna.dolzina), kljuc.uporabnika, .keep_all = TRUE), col="blue", alpha = 0.05) +  
   labs(title ="Vizualizacija prodajalcev in kupcev", x = "Zemljepisna dolžina", y = "Zemljepisna širina") 
+  #test_nakupov   <- smoothScatter(aes(x=gostota_nakupov_1$zemljepisna.dolzina, y = gostota_nakupov_1$zemljepisna.širina))
 
+
+##TODO Obarvano območje glede na gostoto prihodkov
+##TODO Obarvano glede na gostoto in glede na tip plačila po barvi
+##TODO poglej GeoSpatial analizo te baze na Kaggle-u
 

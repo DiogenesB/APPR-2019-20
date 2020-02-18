@@ -37,11 +37,13 @@ tabela_lokacij <- read_csv("podatki/olist_geolocation_dataset.csv", na = c("", "
 tabela_lokacij <- tabela_lokacij %>% drop_na()
 colnames(tabela_lokacij) <- stolpci_5
 
+
 #Uvoz šeste tabele
 stolpci_6 <- c("kljuc.prodajalca", "postna.stevilka", "mesto", "zvezna.drzava")
 tabela_prodajalcev <- read_csv("podatki/olist_sellers_dataset.csv", na = c("", " ", "NA"))
 tabela_prodajalcev <- tabela_prodajalcev %>% drop_na
 colnames(tabela_prodajalcev) <- stolpci_6
+
 
 #Uvoz sedme tabele
 stolpci_7 <- c("kljuc.uporabnika", "unikaten.kljuc.uporabnika", "postna.stevilka", "mesto", "zvezna.drzava")
@@ -50,6 +52,12 @@ tabela_kupcev <- tabela_kupcev %>% drop_na()
 colnames(tabela_kupcev) <- stolpci_7
 
 
+#Uvoz osme tabele
+tabela_narocil_prodajalcev <- read_csv("podatki/olist_order_items_dataset.csv", na = c("", " ", "NA"))
+tabela_narocil_prodajalcev <- tabela_narocil_prodajalcev %>%
+  select(order_id, seller_id)
+stolpci_8 <- c("kljuc.narocila", "kljuc.prodajalca")
+colnames(tabela_narocil_prodajalcev) <- stolpci_8
 
 
 #Združevanje 1. in 2. tabele
@@ -78,7 +86,26 @@ lokacija_kupcev <- left_join(tabela_kupcev, tabela_lokacij, by = c("postna.stevi
 lokacija_kupcev <- lokacija_kupcev %>%
   drop_na()
 
- 
+
+#Združevanje 1., 2., 5. in 7. tabele
+gostota_nakupov <- left_join(lokacija_kupcev, tabela_narocil, by = c("kljuc.uporabnika"), copy = FALSE)
+gostota_nakupov_1 <- left_join(gostota_nakupov, tabela_vrst_placil, by = c("kljuc.narocila"), copy = FALSE)
+gostota_nakupov_1 <- gostota_nakupov_1 %>% 
+  drop_na()
+
+
+#Tabela opisuje zemljepisna koordinate in trajanje da je narocilo prispelo
+lokacija_narocil <- left_join(tabela_narocil_prodajalcev, select(tabela_narocil, kljuc.narocila, cas.nakupa, dejanski.cas.dostave), by = c("kljuc.narocila"), copy = FALSE) %>%
+  mutate(trajanje = difftime(dejanski.cas.dostave, cas.nakupa, units = "days")) %>%
+  mutate(trajanje = round(trajanje, digits = 0)) %>%
+  select(-cas.nakupa, -dejanski.cas.dostave) %>%
+  left_join(select(lokacija_prodajalcev, kljuc.prodajalca, zemljepisna.dolzina, zemljepisna.sirina),  by = c("kljuc.prodajalca"), copy = FALSE) %>%
+  drop_na() %>%
+  rename(zemljepisna.dolzina.P = zemljepisna.dolzina, zemljepisna.sirina.P = zemljepisna.sirina) %>%
+  left_join(select(tabela_narocil, kljuc.narocila, kljuc.uporabnika), by = c("kljuc.narocila"), copy = FALSE) %>%
+  left_join(distinct(select(lokacija_kupcev, kljuc.uporabnika, zemljepisna.sirina, zemljepisna.dolzina), kljuc.uporabnika, .keep_all = TRUE), by = c("kljuc.uporabnika"), copy = FALSE)
+  
+
 #Tabela ki opisuje promet na platformi v letu 2017
 promet_2017 <- narocila %>%
   select(dejanski.cas.dostave, vrednost.placila) %>%
@@ -97,6 +124,7 @@ december <- narocila %>%
   select(dan.narocila, vrednost.placila) %>%
   group_by(dan.narocila) %>%
   summarise(vrednost.placila = sum(vrednost.placila))
+
 
 #Tabela, ki opisuje promet na platformi v novembru leta 2017
 november <- narocila %>%
