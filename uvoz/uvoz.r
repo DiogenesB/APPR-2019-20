@@ -3,6 +3,7 @@ library(tidyr)
 library(dplyr)
 library(ggplot2)
 library(lubridate)
+library(geosphere)
 
 
 #Uvoz prve tabele
@@ -85,13 +86,7 @@ lokacija_prodajalcev <- lokacija_prodajalcev %>%
 lokacija_kupcev <- left_join(tabela_kupcev, tabela_lokacij, by = c("postna.stevilka" = "postna.stevilka", "mesto" = "mesto", "zvezna.drzava" = "zvezna.drzava"), copy=FALSE)
 lokacija_kupcev <- lokacija_kupcev %>%
   drop_na()
-
-
-#Združevanje 1., 2., 5. in 7. tabele
-gostota_nakupov <- left_join(lokacija_kupcev, tabela_narocil, by = c("kljuc.uporabnika"), copy = FALSE)
-gostota_nakupov_1 <- left_join(gostota_nakupov, tabela_vrst_placil, by = c("kljuc.narocila"), copy = FALSE)
-gostota_nakupov_1 <- gostota_nakupov_1 %>% 
-  drop_na()
+#TODO dodaj vrsto plačila, da lahko barvaš različne tipe plačil
 
 
 #Tabela opisuje zemljepisna koordinate in trajanje da je narocilo prispelo
@@ -103,7 +98,13 @@ lokacija_narocil <- left_join(tabela_narocil_prodajalcev, select(tabela_narocil,
   drop_na() %>%
   rename(zemljepisna.dolzina.P = zemljepisna.dolzina, zemljepisna.sirina.P = zemljepisna.sirina) %>%
   left_join(select(tabela_narocil, kljuc.narocila, kljuc.uporabnika), by = c("kljuc.narocila"), copy = FALSE) %>%
-  left_join(distinct(select(lokacija_kupcev, kljuc.uporabnika, zemljepisna.sirina, zemljepisna.dolzina), kljuc.uporabnika, .keep_all = TRUE), by = c("kljuc.uporabnika"), copy = FALSE)
+  left_join(distinct(select(lokacija_kupcev, kljuc.uporabnika, zemljepisna.sirina, zemljepisna.dolzina), kljuc.uporabnika, .keep_all = TRUE), by = c("kljuc.uporabnika"), copy = FALSE) %>%
+  drop_na() %>%
+  rename(zemljepisna.sirina.K = zemljepisna.sirina, zemljepisna.dolzina.K = zemljepisna.dolzina) %>%
+  rowwise()
+  #mutate(razdalja = distm(c(zemljepisna.dolzina.P, zemljepisna.sirina.P), c(zemljepisna.dolzina.K, zemljepisna.sirina.K), fun=distHaversine))
+  
+  
   
 
 #Tabela ki opisuje promet na platformi v letu 2017
