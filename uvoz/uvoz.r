@@ -104,8 +104,6 @@ lokacija_narocil <- left_join(tabela_narocil_prodajalcev, select(tabela_narocil,
   rowwise()
   #mutate(razdalja = distm(c(zemljepisna.dolzina.P, zemljepisna.sirina.P), c(zemljepisna.dolzina.K, zemljepisna.sirina.K), fun=distHaversine))
   
-  
-  
 
 #Tabela ki opisuje promet na platformi v letu 2017
 promet_2017 <- narocila %>%
