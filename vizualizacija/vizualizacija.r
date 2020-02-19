@@ -38,8 +38,11 @@ graf_november <- ggplot(november, aes(x=november$dan.narocila, y=november$vredno
   labs(title = "Pregled prometa v novembru 2017", x = "Dan", y = "Skupni promet") + 
   scale_x_continuous(breaks = 1:30)
 
-
 # TODO: popravi pozicioniranje grafov
+
+#graf_regresija <- scatter.smooth(x=lokacija_narocil$razdalja, y=lokacija_narocil$trajanje)
+#graf_gostote_razdalj <- plot(density(lokacija_narocil$razdalja))
+
 
 
 brazilija <- uvozi.zemljevid("https://biogeo.ucdavis.edu/data/gadm3.6/shp/gadm36_BRA_shp.zip", "gadm36_BRA_0", force=FALSE) %>% fortify()
@@ -47,13 +50,10 @@ brazilija <- uvozi.zemljevid("https://biogeo.ucdavis.edu/data/gadm3.6/shp/gadm36
 
 map <- ggplot(brazilija, aes(x=long, y=lat)) +
   geom_polygon(aes(group=group)) +
-  geom_point(aes(x=zemljepisna.dolzina, y=zemljepisna.sirina), data = lokacija_prodajalcev, col="red") +
-  geom_point(aes(x=zemljepisna.dolzina, y=zemljepisna.sirina), data = distinct(select(lokacija_kupcev, kljuc.uporabnika, zemljepisna.sirina, zemljepisna.dolzina), kljuc.uporabnika, .keep_all = TRUE), col="blue", alpha = 0.05) +  
+  geom_point(aes(x=zemljepisna.dolzina, y=zemljepisna.sirina), data = distinct(select(lokacija_kupcev, kljuc.uporabnika, zemljepisna.sirina, zemljepisna.dolzina), kljuc.uporabnika, .keep_all = TRUE), col="blue", alpha = 0.05) + 
+  geom_point(aes(x=zemljepisna.dolzina, y=zemljepisna.sirina), data = lokacija_prodajalcev, col="red", alpha = 0.05) +
   labs(title ="Vizualizacija prodajalcev in kupcev", x = "Zemljepisna dolžina", y = "Zemljepisna širina") 
-  #test_nakupov   <- smoothScatter(aes(x=gostota_nakupov_1$zemljepisna.dolzina, y = gostota_nakupov_1$zemljepisna.širina))
-
-
-##TODO Obarvano območje glede na gostoto prihodkov
 ##TODO Obarvano glede na gostoto in glede na tip plačila po barvi
+##TODO odpravi lokacije ki niso na zemljevidu
 ##TODO poglej GeoSpatial analizo te baze na Kaggle-u
 
