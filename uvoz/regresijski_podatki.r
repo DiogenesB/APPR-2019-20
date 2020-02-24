@@ -35,8 +35,9 @@ lokacija_narocil <- tabela_narocil_prodajalcev %>%
             by="kljuc.uporabnika", copy=FALSE) %>%
   drop_na() %>%
   rename(zemljepisna.sirina.K=zemljepisna.sirina, zemljepisna.dolzina.K=zemljepisna.dolzina) %>%
+  distinct(kljuc.narocila, .keep_all=TRUE) %>%
   mutate(razdalja=spDists(matrix(c(zemljepisna.dolzina.P, zemljepisna.sirina.P), ncol=2),
                           matrix(c(zemljepisna.dolzina.K, zemljepisna.sirina.K), ncol=2),
                           longlat=TRUE, diagonal=TRUE))
 
-write.csv(lokacija_narocil, "regresija.csv", row.names=TRUE )
+write.csv(lokacija_narocil, "uvoz/regresija.csv", row.names=TRUE )
