@@ -90,20 +90,24 @@ lokacija_kupcev <- lokacija_kupcev %>%
 
 
 #Tabela opisuje zemljepisna koordinate in trajanje da je narocilo prispelo
-# lokacija_narocil <- left_join(tabela_narocil_prodajalcev, select(tabela_narocil, kljuc.narocila, cas.nakupa, dejanski.cas.dostave), by = c("kljuc.narocila"), copy = FALSE) %>%
-#   mutate(trajanje = difftime(dejanski.cas.dostave, cas.nakupa, units = "days")) %>%
-#   mutate(trajanje = round(trajanje, digits = 0)) %>%
-#   select(-cas.nakupa, -dejanski.cas.dostave) %>%
-#   left_join(select(lokacija_prodajalcev, kljuc.prodajalca, zemljepisna.dolzina, zemljepisna.sirina),  by = c("kljuc.prodajalca"), copy = FALSE) %>%
-#   drop_na() %>%
-#   rename(zemljepisna.dolzina.P = zemljepisna.dolzina, zemljepisna.sirina.P = zemljepisna.sirina) %>%
-#   left_join(select(tabela_narocil, kljuc.narocila, kljuc.uporabnika), by = c("kljuc.narocila"), copy = FALSE) %>%
-#   left_join(distinct(select(lokacija_kupcev, kljuc.uporabnika, zemljepisna.sirina, zemljepisna.dolzina), kljuc.uporabnika, .keep_all = TRUE), by = c("kljuc.uporabnika"), copy = FALSE) %>%
-#   drop_na() %>%
-#   rename(zemljepisna.sirina.K = zemljepisna.sirina, zemljepisna.dolzina.K = zemljepisna.dolzina) %>%
-#   rowwise()
-  #mutate(razdalja = distm(c(zemljepisna.dolzina.P, zemljepisna.sirina.P), c(zemljepisna.dolzina.K, zemljepisna.sirina.K), fun=distHaversine))
-
+lokacija_narocil <- tabela_narocil_prodajalcev %>%
+  left_join(tabela_narocil %>% select(kljuc.narocila, cas.nakupa, dejanski.cas.dostave), by="kljuc.narocila", copy=FALSE) %>%
+  mutate(trajanje=difftime(dejanski.cas.dostave, cas.nakupa, units="days") %>% round(digits=0)) %>%
+  select(-cas.nakupa, -dejanski.cas.dostave) %>%
+  left_join(lokacija_prodajalcev %>% select(kljuc.prodajalca, zemljepisna.dolzina, zemljepisna.sirina), by="kljuc.prodajalca", copy=FALSE) %>%
+  drop_na() %>%
+  rename(zemljepisna.dolzina.P=zemljepisna.dolzina, zemljepisna.sirina.P=zemljepisna.sirina) %>%
+  left_join(tabela_narocil %>% select(kljuc.narocila, kljuc.uporabnika), by="kljuc.narocila", copy=FALSE) %>%
+  left_join(lokacija_kupcev %>% select(kljuc.uporabnika, zemljepisna.sirina, zemljepisna.dolzina) %>% distinct(kljuc.uporabnika, .keep_all=TRUE), 
+    	by="kljuc.uporabnika", copy=FALSE) %>%
+  drop_na() %>%
+  rename(zemljepisna.sirina.K=zemljepisna.sirina, zemljepisna.dolzina.K=zemljepisna.dolzina) %>%
+  distinct(kljuc.narocila, .keep_all=TRUE) %>%
+  mutate(razdalja=spDists(matrix(c(zemljepisna.dolzina.P, zemljepisna.sirina.P), ncol=2),
+                          matrix(c(zemljepisna.dolzina.K, zemljepisna.sirina.K), ncol=2),
+                          longlat=TRUE, diagonal=TRUE)) %>%
+  select(trajanje, razdalja) %>%
+  mutate(trajanje = trajanje %>% as.numeric())
 
 #Tabela ki opisuje promet na platformi v letu 2017
 promet_2017 <- narocila %>%
