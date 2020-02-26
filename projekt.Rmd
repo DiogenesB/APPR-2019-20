@@ -64,7 +64,7 @@ Podatke sem uvozil v obliki 4 različnih CSV datotek, ki so zdaj v 2 razpredelni
 source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 ```
 
-```{r Promet2017, echo=FALSE, message=FALSE}
+```{r Promet2017, echo=FALSE, message=FALSE, warning=FALSE}
 graf_promet
 ```
 
@@ -76,28 +76,39 @@ graf_tipi
 graf_gostot
 ```
 
-```{r December2017, echo=FALSE, message=FALSE}
+```{r December2017, echo=FALSE, message=FALSE, warning=FALSE}
 graf_december
 ```
 
-```{r November2017, echo=FALSE, message=FALSE}
+```{r November2017, echo=FALSE, message=FALSE, warning=FALSE}
 graf_november
 ```
 
-```{r zemljevid, echo=FALSE, message=FALSE}
+```{r Zemljevid, echo=FALSE, message=FALSE, warning=FALSE}
 map
 ```
 
 
 
-
-
-
-
-
 # Napredna analiza podatkov
 
-```{r analiza, echo=FALSE, message=FALSE}
-#source("analiza/analiza.r", encoding="UTF-8")
+```{r analiza, echo=FALSE, message=FALSE, warning=FALSE}
+source("analiza/analiza.r", encoding="UTF-8")
 ```
+
+```{r OdnosKolicin, echo=FALSE, message=FALSE, warning=FALSE}
+odnos_kolicin
+```
+
+```{r GostotaTrajanja, echo=FALSE, message=FALSE, warning=FALSE}
+gostota_trajanja
+```
+
+```{r GostotaRazdalja, echo=FALSE, message=FALSE, warning=FALSE}
+ gostota_razdalja
+```
+
+
+
+
 
