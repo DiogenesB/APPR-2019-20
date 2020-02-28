@@ -85,7 +85,12 @@ lokacija_prodajalcev <- lokacija_prodajalcev %>%
 #Združevanje 5. in 7. tabele
 lokacija_kupcev <- left_join(tabela_kupcev, tabela_lokacij, by = c("postna.stevilka" = "postna.stevilka", "mesto" = "mesto", "zvezna.drzava" = "zvezna.drzava"), copy=FALSE)
 lokacija_kupcev <- lokacija_kupcev %>%
-  drop_na()
+  drop_na() %>%
+  left_join(tabela_narocil %>% select(kljuc.narocila, kljuc.uporabnika), by="kljuc.uporabnika", copy=FALSE) %>%
+  left_join(tabela_vrst_placil %>% select(kljuc.narocila, tip.placila), by="kljuc.narocila", copy=FALSE) %>%
+  drop_na() %>%
+  select(kljuc.uporabnika, zemljepisna.sirina, zemljepisna.dolzina, tip.placila) %>%
+  mutate(tip.placila = tip.placila %>% as.factor())
 #TODO dodaj vrsto plačila, da lahko barvaš različne tipe plačil
 
 
@@ -108,6 +113,8 @@ lokacija_narocil <- tabela_narocil_prodajalcev %>%
                           longlat=TRUE, diagonal=TRUE)) %>%
   select(trajanje, razdalja) %>%
   mutate(trajanje = trajanje %>% as.numeric())
+
+
 
 #Tabela ki opisuje promet na platformi v letu 2017
 promet_2017 <- narocila %>%
