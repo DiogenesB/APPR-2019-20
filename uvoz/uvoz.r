@@ -91,7 +91,7 @@ lokacija_kupcev <- lokacija_kupcev %>%
   drop_na() %>%
   select(kljuc.uporabnika, zemljepisna.sirina, zemljepisna.dolzina, tip.placila) %>%
   mutate(tip.placila = tip.placila %>% as.factor())
-#TODO dodaj vrsto plačila, da lahko barvaš različne tipe plačil
+
 
 
 #Tabela opisuje zemljepisna koordinate in trajanje da je narocilo prispelo
