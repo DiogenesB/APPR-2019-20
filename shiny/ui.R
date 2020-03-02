@@ -1,5 +1,6 @@
 library(shiny)
 
 shinyUI(fluidPage(
-  plotOutput("zemljevid")
+  checkboxGroupInput(inputId="tip", label="Izberite tip plačila"),
+  plotOutput("zemljevid") ## TODO popravi razmerja zemljevida
 ))
