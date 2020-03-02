@@ -7,6 +7,7 @@ output:
     includes:
       in_header: lib/styles.sty
     latex_engine: xelatex
+runtime: shiny
 ---
 
 ```{r setup, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
@@ -85,7 +86,7 @@ graf_november
 ```
 
 ```{r Zemljevid, echo=FALSE, message=FALSE, warning=FALSE}
-map
+#map
 ```
 
 
@@ -106,6 +107,10 @@ gostota_trajanja
 
 ```{r GostotaRazdalja, echo=FALSE, message=FALSE, warning=FALSE}
  gostota_razdalja
+```
+
+```{r shiny, echo=FALSE}
+shinyAppDir("shiny", options=list(width="100%", height=600))
 ```
 
 
