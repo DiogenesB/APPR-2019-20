@@ -47,5 +47,4 @@ map <- ggplot(brazilija, aes(x=long, y=lat)) +
   geom_point(aes(x=zemljepisna.dolzina, y=zemljepisna.sirina), data = lokacija_prodajalcev, col="red", alpha = 0.05) +
   coord_cartesian(xlim = c(-73.98283055, -34.79314722), ylim = c(-33.75116944, 5.27438888)) +
   labs(title ="Vizualizacija prodajalcev in kupcev", x = "Zemljepisna dolžina", y = "Zemljepisna širina") 
-##TODO Obarvano glede na gostoto in glede na tip plačila po barvi
 ##TODO poglej GeoSpatial analizo te baze na Kaggle-u
