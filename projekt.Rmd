@@ -38,7 +38,7 @@ Izvedel sem analizo poslovanja na platformi Olist. Platforma Olist prodajalcem p
 source("uvoz/uvoz.r", encoding="UTF-8")
 ```
 
-Podatke sem uvozil v obliki 4 različnih CSV datotek, ki so zdaj v 2 razpredelnicah v obliki *tidy data*.
+Podatke sem uvozil v obliki 8 različnih CSV datotek. Iz njih sem sestavil 3 ključne tabele, ki se potem uporabijo za vizualizacije.
 
 1. `narocila` - podatki o vseh naročilih na portalu
   - `kljuc.narocila` - spremenljivka: ključ naročila (identifikacija)
@@ -58,6 +58,12 @@ Podatke sem uvozil v obliki 4 različnih CSV datotek, ki so zdaj v 2 razpredelni
   - `sirina` - meritev: širina izdelka (cm)
   - `visina` - meritev: višina izdelka (cm)
   - `kategorija.izdelka` - spremenljivka: v katero kategorijo spada izdelek.
+
+3. `lokacija_narocil` - podatki potovanju narocila
+  - `trajanje` - spremenljivka: kako dolgo je trajala dostava do kupca (dnevi)
+  - `razdalja` - meritev: merjenje zracne razdalje med prodajalcem in kupcem (km)
+
+
   
 # Analiza in vizualizacija podatkov
 
@@ -69,51 +75,79 @@ source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 graf_promet
 ```
 
+> #### Vizualizacija predstavlja kaksen je promet na portalu čez leto.
+
 ```{r TipiPlacil, echo=FALSE, warning=FALSE}
 graf_tipi
 ```
+
+> #### Vizualizacija predstavlja število naročil glede na plačilno sredstvo.
+> #### Opazimo, da je večina naročil zaključenih z kreditno kartico, saj je 'trenje' pri nakupu najmanjše.
 
 ```{r GostotaCen, echo=FALSE, warning=FALSE}
 graf_gostot
 ```
 
+> #### Vizualizacija prikazuje kakšne so gostote cen glede na plačilno sredstvo.
+> #### Vidimo, da se nakupi z boletom, kreditno ali debento kartico ne razlikujejo po cenah, medtem ko se z boni v povprečju kupuje nižje vrednosti izdelkov
+
 ```{r December2017, echo=FALSE, message=FALSE, warning=FALSE}
 graf_december
 ```
+
+> #### Vizualizacija prikazuje promet portala v mesecu decembru, leta 2017. Nakazuje 'mrzlično' nakupovanje pred božičem.
+> #### Bolj kot se bližamo božiču, manj je prometa, saj je verjetnost pravočasne dostave zelo mala.
 
 ```{r November2017, echo=FALSE, message=FALSE, warning=FALSE}
 graf_november
 ```
 
+> #### Vizualizacija prikazuje promet portala v mesecu novembru, leta 2017. Tukaj se opazi izrazit promet 
+> #### v petek, 24. novembra, ki je znan tudi kot 'black friday'. 
+
 ```{r Zemljevid, echo=FALSE, message=FALSE, warning=FALSE}
-#map
+map
 ```
+![](slike/BDP_brazilije.png)
+
+> #### Če pogledamo lokacije prodajalcev in bdp na prebivalca, glede na lokacijo v Braziliji,
+> #### vidimo da je prodajalcev več tam, kjer je tudi BDP na prebivalca višji. Nakazuje, da je v bolj razvitih delih Brazilije e-trgovina bolj razvit posel.
 
 
 
 # Napredna analiza podatkov
 
-```{r analiza, echo=FALSE, message=FALSE, warning=FALSE}
+ ```{r analiza, echo=FALSE, message=FALSE, warning=FALSE}
 source("analiza/analiza.r", encoding="UTF-8")
 ```
+> #### V napredni analizi podatkov bom uporabil preglednico `lokacija_narocil`, prvo sem si ogledal korelacijo med razdaljo in trajanjem.
 
 ```{r OdnosKolicin, echo=FALSE, message=FALSE, warning=FALSE}
-odnos_kolicin
+cor_kolicin
 ```
+
+> #### Vidimo, da sta spremnljivki rahlo koreliralni. Pogledamo še gostote porazdelitev vsake posebej. 
 
 ```{r GostotaTrajanja, echo=FALSE, message=FALSE, warning=FALSE}
 gostota_trajanja
 ```
 
+> #### Kot vidimo, je prva polovica gostote zelo zanimiva, neznam pa je ravno razloziti. V zelo grobem smislu je normalno porazdeljena.
+ 
 ```{r GostotaRazdalja, echo=FALSE, message=FALSE, warning=FALSE}
- gostota_razdalja
+gostota_razdalja
 ```
 
-```{r shiny, echo=FALSE}
-shinyAppDir("shiny", options=list(width="100%", height=600))
+> #### Tudi razdalja je porazdeljena dokaj 'lepo', vsaj približno normalno. 
+
+
+# Shiny 
+
+```{r shiny, echo=FALSE, message=FALSE, warning=FALSE}
+#ui
 ```
 
 
-
+ 
 
 
