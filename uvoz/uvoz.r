@@ -21,7 +21,7 @@ colnames(tabela_vrst_placil) <- stolpci_2
 
 #Uvoz tretje tabele
 stolpci_3 <- c("kljuc.izdelka", "kategorija.izdelka", "dolzina.naziva.izdelka", "dolzina.opisa.izdelka", 
-               "stevilo.objavljenih.fotografij.izdelka", "masa.izdelka (g)", "dolzina", "visina", "sirina")
+               "stevilo.objavljenih.fotografij.izdelka", "masa.izdelka", "dolzina", "visina", "sirina")
 tabela_produktov <- read_csv("podatki/olist_products_dataset.csv", na = c("", " ", "NA")) %>% drop_na() 
 colnames(tabela_produktov) <- stolpci_3
 
@@ -54,7 +54,6 @@ colnames(tabela_kupcev) <- stolpci_7
 
 
 #Uvoz osme tabele
-tabela_narocil_prodajalcev <- read_csv("podatki/olist_order_items_dataset.csv", na = c("", " ", "NA"))
 tabela_narocil_prodajalcev <- tabela_narocil_prodajalcev %>%
   select(order_id, seller_id)
 stolpci_8 <- c("kljuc.narocila", "kljuc.prodajalca")
@@ -111,7 +110,7 @@ lokacija_narocil <- tabela_narocil_prodajalcev %>%
   mutate(razdalja=spDists(matrix(c(zemljepisna.dolzina.P, zemljepisna.sirina.P), ncol=2),
                           matrix(c(zemljepisna.dolzina.K, zemljepisna.sirina.K), ncol=2),
                           longlat=TRUE, diagonal=TRUE)) %>%
-  select(trajanje, razdalja) %>%
+
   mutate(trajanje = trajanje %>% as.numeric())
 
 
