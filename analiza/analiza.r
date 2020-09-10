@@ -17,15 +17,6 @@ gostota_razdalja <- ggplot(lokacija_narocil, aes(x=lokacija_narocil$razdalja)) +
 
 ##Naredimo model linearne regresije in izpišemo glavne parametre
 linearna_regresija <- lm(trajanje ~ razdalja, data=lokacija_narocil)
+koeficienti <- linearna_regresija$coefficients
 #print(linearna_regresija)
 summary(linearna_regresija)
-
-##Poglejmo še cluster analizo podatkov
-#clustering <- lokacija_narocil %>%
-#  na.omit() %>%
-#  scale()
-
-##Definiramo število oblakov
-#fit <- Mclust(clustering)
-#graf_fit <- plot(fit)
-#povzetek_fit <- summary(fit)
