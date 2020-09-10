@@ -101,6 +101,7 @@ graf_december
 ```{r November2017, echo=FALSE, message=FALSE, warning=FALSE}
 graf_november
 ```
+
 > #### Vizualizacija prikazuje promet portala v mesecu novembru, leta 2017. Tukaj se opazi izrazit promet 
 > #### v petek, 24. novembra, ki je znan tudi kot 'black friday'. 
 
