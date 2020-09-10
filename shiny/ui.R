@@ -18,9 +18,10 @@ ui <- fluidPage(
     ),
   
     mainPanel(
-      tableOutput("povprecje")
+      tableOutput("povprecje_izdelkov")
     )
   )
 )
 
 
+### Zgleda vse OK
