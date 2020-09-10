@@ -54,7 +54,7 @@ Podatke sem uvozil v obliki 8 različnih CSV datotek. Iz njih sem sestavil 3 klj
 2. `produkti` - podatki o vseh izdelkih na platformi
   - `kljuc.izdelka` - spremenljivka: ključ izdelka (identifikacija)
   - `masa.izdelka` - meritev: masa izdelka (gram)
-  - `dolzina` - meritev: dolžina izdelka (cm)
+  - `dolsfsdina` - meritev: dolžina izdelka (cm)
   - `sirina` - meritev: širina izdelka (cm)
   - `visina` - meritev: višina izdelka (cm)
   - `kategorija.izdelka` - spremenljivka: v katero kategorijo spada izdelek.
@@ -119,6 +119,7 @@ map
  ```{r analiza, echo=FALSE, message=FALSE, warning=FALSE}
 source("analiza/analiza.r", encoding="UTF-8")
 ```
+
 > #### V napredni analizi podatkov bom uporabil preglednico `lokacija_narocil`, prvo sem si ogledal korelacijo med razdaljo in trajanjem.
 
 ```{r OdnosKolicin, echo=FALSE, message=FALSE, warning=FALSE}
