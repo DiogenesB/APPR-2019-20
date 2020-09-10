@@ -54,7 +54,7 @@ Podatke sem uvozil v obliki 8 različnih CSV datotek. Iz njih sem sestavil 3 klj
 2. `produkti` - podatki o vseh izdelkih na platformi
   - `kljuc.izdelka` - spremenljivka: ključ izdelka (identifikacija)
   - `masa.izdelka` - meritev: masa izdelka (gram)
-  - `dolsfsdina` - meritev: dolžina izdelka (cm)
+  - `dolzina` - meritev: dolžina izdelka (cm)
   - `sirina` - meritev: širina izdelka (cm)
   - `visina` - meritev: višina izdelka (cm)
   - `kategorija.izdelka` - spremenljivka: v katero kategorijo spada izdelek.
