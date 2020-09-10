@@ -22,6 +22,3 @@ ui <- fluidPage(
     )
   )
 )
-
-
-### Zgleda vse OK
