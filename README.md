@@ -14,96 +14,35 @@ Potem ko kupec izpolni naročilo, prodajalec dobi obvestilo da lahko odpremi art
 ### Kakšen je cilj analize?
 Izvedel bom analizo naročil med leti 2016 in 2018. 
 Pogledal si bom:
-- Delež dostav, ki so bile izvedene v roku in hitrost dostave v odvisnosti razdalje (3. faza)
-- Povprečni znesek nakupa in način plačila (3. faza)
-- Kategorije izdelkov, ki prevladujejo na platformi (3. faza)
-- Vizualizacija lokacije naslovov naročil (3. faza)
-- Predvidevanje prejema naročila (4. faza)
-- Segmentacija trga (4. faza)
+- Pregled prometa po letih (3. faza)
+- Načini plačila (3. faza)
+- Vizualizacija lokacije prodajalcev naročil (3. faza)
+- Izračunavanje trajanja dostave in izračun povprečne mase po kategoriji izdelkov (4. faza)
+
 
 ## Podatki
 
 ### Podatkovni vir
 [Vir](https://www.kaggle.com/olistbr/brazilian-ecommerce/home) iz katerega bom črpal podatke je javno dostopen nabor podatkov iz spletne platforme [Kaggle](https://www.kaggle.com/)
-Uporabil bom nabor 7 različnih csv dokumentov:
+Uporabil bom nabor 8 različnih csv dokumentov:
 1. `olist_orders_dataset.csv`
 2. `olist_order_payments_dataset.csv`
-3. `product_category_name_translation.csv`
-4. `olist_products_dataset.csv`
+3. `olist_products_dataset.csv`
+4. `product_category_name_translation.csv`
 5. `olist_geolocation_dataset.csv`
 6. `olist_sellers_dataset.csv`
-7. `olist_order_items_data.csv`
+7. `olist_customers_dataset.csv`
+8. `olist_order_items_data.csv`
 
 
 ### Podatkovni model
 
 Podatkovni koncept tabel (shema tabel po 2. fazi):
-
-#### 1. tabela (`olist_orders_dataset.csv`)
-
-| "order.delivered.carrier.date" | ""order.delivered.customer.date" | "order.estimated.delivery.date" |
-| :---: | :---: | :---: |
-| Datum, ko je logistični partner prejel izdelek, tip: date object | Datum, ko je stranka dejansko prejela naročilo, tip: date object | Datum, ki je bil predviden za prejem naročila, tip: date object |
-
-
-#### 2. tabela (`olist_order_payments_dataset.csv`)
-
-| "payment.value" | "payment.type" |
-| :---: | :---: |
-| Znesek naročila, tip: število | Tip plačila, tip: neurejen faktor |
-
-
-#### 3. tabela (`olist_products_dataset.csv` in `product_category_name_translation.csv` )
-
-| "product.id" | "product.category.name" |
-| :---: | :---: |
-| Šifrant artikla, tip: hexadecimal (UUID) | Kategorija izdelka v Angleščini (z uporabo 3. in 4. csvja), tip: neurejen faktor |
-
-
-#### 4. tabela (`olist_geolocation_dataset.csv`)
-
-| "geolocation.lat" | "geolocation.lng" |
-| :---: | :---: |
-| Zemljepisna širina, tip: število | Zemljepisna dolžina, tip: število |
-
-#### 5. tabela (`olist_orders_dataset.csv`, `olist.sellers.dataset.csv`, `olist.geolocation.dataset.csv` in `olist.order.items.dataset.csv`)
-
-| "seller.lat" | "seller.lng" | "custmer.lat" | "custmer.lng" | "order.approved.at" | "order.delivered.custmer.date" (to spremenljivko napovedujemo) |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| Zemljepisna širina prodajalca, tip: število | Zemljepisna dolžina prodajalca, tip: število | Zemljepisna širina kupca, tip: število | Zemljepisna dolžina kupca, tip: število | Čas, ko je bilo potrjeno naročilo, tip: date object (?)| Čas, ko so bili naročilo dostavljeno, tip: datetime   
-
-### Plan dela
-
-#### Čiščenje in analiza podaktov (2. in 3. faza)
-
-1. tabela:
-    - Čiščenje podatkov
-    - Pretvarjanje tipov 
-    - Analiza
-
-2. tabela:
-    - Čiščenje podatkov
-    - Pretvarjanje tipov
-    - Analiza
-
-3. tabela:
-    - Čiščenje podatkov
-    - Pretvarjanje tipov
-    - Združevanje s 4. tabelo
-
-4. tabela:
-    - Čiščenje podatkov
-    - Pretvarjanje tipov
-    - Združevanje s 3. tabelo
-    - Analiza 
-
-5. tabela:
-    - Čiščenje podatkov
-    - Vizualizacija naročil
+![](slike/struktura_baze.png)
 
 #### Napredna analiza (4. faza)
 
-Pri napredni analizi (linerani agresiji) bom izračunaval **predviden čas pošiljke** s pomočjo 1. tabele (`olist.orders.dataset.csv`) in **segmentacijo kupcev** (clustering) s pomočjo 1. in 2. tabele (`olist_orders_dataset.csv` in `olist_customers_dataset.csv` )
+Pri napredni analizi (linerani agresiji) bom izračunaval **predviden čas pošiljke** s pomočjo 1. tabele (`olist.orders.dataset.csv`) 
 
 ## Program
 
@@ -164,3 +103,5 @@ v datoteki `gitconfig` nastavite svoje ime in priimek ter e-poštni naslov
 ob naslednjem.zagonu bo mogoče delati commite.
 Te podatke lahko nastavite tudi z `git config --global` v konzoli
 (vendar bodo veljale le v trenutni seji).
+
+###TODO nujno popravi kar readme - dopolni vse tabele ali pa jih samo naštej
