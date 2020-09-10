@@ -54,6 +54,7 @@ colnames(tabela_kupcev) <- stolpci_7
 
 
 #Uvoz osme tabele
+tabela_narocil_prodajalcev <- read_csv("podatki/olist_order_items_dataset.csv")
 tabela_narocil_prodajalcev <- tabela_narocil_prodajalcev %>%
   select(order_id, seller_id)
 stolpci_8 <- c("kljuc.narocila", "kljuc.prodajalca")
@@ -104,13 +105,13 @@ lokacija_narocil <- tabela_narocil_prodajalcev %>%
   left_join(tabela_narocil %>% select(kljuc.narocila, kljuc.uporabnika), by="kljuc.narocila", copy=FALSE) %>%
   left_join(lokacija_kupcev %>% select(kljuc.uporabnika, zemljepisna.sirina, zemljepisna.dolzina) %>% distinct(kljuc.uporabnika, .keep_all=TRUE), 
     	by="kljuc.uporabnika", copy=FALSE) %>%
+  left_join(narocila %>% select(kljuc.narocila, pravocasnost), by="kljuc.narocila", copy=FALSE) %>%
   drop_na() %>%
   rename(zemljepisna.sirina.K=zemljepisna.sirina, zemljepisna.dolzina.K=zemljepisna.dolzina) %>%
   distinct(kljuc.narocila, .keep_all=TRUE) %>%
   mutate(razdalja=spDists(matrix(c(zemljepisna.dolzina.P, zemljepisna.sirina.P), ncol=2),
                           matrix(c(zemljepisna.dolzina.K, zemljepisna.sirina.K), ncol=2),
                           longlat=TRUE, diagonal=TRUE)) %>%
-
   mutate(trajanje = trajanje %>% as.numeric())
 
 
@@ -143,3 +144,5 @@ november <- narocila %>%
   select(dan.narocila, vrednost.placila) %>%
   group_by(dan.narocila) %>%
   summarise(vrednost.placila = sum(vrednost.placila))
+
+
