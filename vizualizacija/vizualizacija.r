@@ -22,12 +22,13 @@ graf_tipi <- ggplot(narocila, aes(narocila$tip.placila)) +
   geom_bar() +
   labs(title = "Plačilna sredstva", x = "Tip plačilnega sredstva", y = "Število nakupov") + 
   scale_x_discrete() + 
-  coord_flip()
+  coord_flip() 
 
 graf_gostot <- ggplot(narocila, aes(x = narocila$vrednost.placila, color=narocila$tip.placila)) +
   geom_density()  +
-  scale_x_log10() +
-  labs(title = "Gostota cen glede na plačilno sredstvo", x = "Gostota", y = "Vrednost plačila")
+  scale_x_log10(labels=scales::comma_format(big.mark="")) +
+  labs(title = "Gostota cen glede na plačilno sredstvo", x = "Gostota", y = "Gostota plačil", color="Tip plačila") 
+
 
 graf_december <- ggplot(december, aes(x=december$dan.narocila, y = december$vrednost.placila)) +
   geom_col() +
