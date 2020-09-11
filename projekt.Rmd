@@ -144,16 +144,8 @@ gostota_razdalja
 
 # Shiny 
 
-```{r shiny ui, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-source("shiny/ui.r", encoding = "UTF-8")
-```
-
-```{r shiny server, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-source("shiny/server.r", encoding = "UTF-8")
-```
-
 ```{r shiny, echo=FALSE, message=FALSE, warning=FALSE}
-shinyApp(ui = ui, server = server)
+shinyAppDir("shiny")
 ```
 
 
