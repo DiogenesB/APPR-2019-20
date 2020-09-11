@@ -23,7 +23,7 @@ Pogledal si bom:
 ## Podatki
 
 ### Podatkovni vir
-[Vir](https://www.kaggle.com/olistbr/brazilian-ecommerce/home) iz katerega bom črpal podatke je javno dostopen nabor podatkov iz spletne platforme [Kaggle](https://www.kaggle.com/)
+[Vir](https://www.kaggle.com/olistbr/brazilian-ecommerce/home) iz katerega bom črpal podatke je javno dostopen nabor podatkov iz spletne platforme [Kaggle](https://www.kaggle.com/).
 Uporabil bom nabor 8 različnih csv dokumentov:
 1. `olist_orders_dataset.csv`
 2. `olist_order_payments_dataset.csv`
