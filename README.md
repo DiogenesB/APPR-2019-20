@@ -2,7 +2,7 @@
 
 Repozitorij z gradivi pri predmetu APPR v študijskem letu 2018/19
 
-* [![Shiny](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/DiogenesB/APPR-2018-19/master?urlpath=shiny/APPR-2019-20/projekt.Rmd) Shiny
+* [![Shiny](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/DiogenesB/APPR-2019-20/master?urlpath=shiny/APPR-2019-20/projekt.Rmd) Shiny
 * [![RStudio](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/DiogenesB/APPR-2019-20/master?urlpath=rstudio) RStudio
 
 
@@ -82,7 +82,7 @@ Za zagon tega vzorca je potrebno namestiti sledeče pakete za R:
 
 ## Binder
 
-Zgornje [povezave](#analiza-podatkov-s-programom-r-201819)
+Zgornje [povezave](#analiza-podatkov-s-programom-r-201920)
 omogočajo poganjanje projekta na spletu z orodjem [Binder](https://mybinder.org/).
 V ta namen je bila pripravljena slika za [Docker](https://www.docker.com/),
 ki vsebuje večino paketov, ki jih boste potrebovali za svoj projekt.
@@ -104,4 +104,4 @@ ob naslednjem.zagonu bo mogoče delati commite.
 Te podatke lahko nastavite tudi z `git config --global` v konzoli
 (vendar bodo veljale le v trenutni seji).
 
-###TODO nujno popravi kar readme - dopolni vse tabele ali pa jih samo naštej
+
