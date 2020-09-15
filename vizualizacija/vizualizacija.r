@@ -11,6 +11,11 @@ library(maps)
 library(rgeos)
 source("lib/uvozi.zemljevid.r")
 
+tipi <- c("boleto"="Boleto",
+          "credit_card"="Kreditna kartica",
+          "debit_card"="Debetna kartica",
+          "voucher"="Vavčer") 
+
 meseci <- c("Januar", "Februar", "Marec", "April", "Maj", "Junij", "Julij", "Avgust", "September", "Oktober", "November", "December")
 graf_promet <- ggplot(promet_2017, aes(x = promet_2017$mesec.dostave, y = promet_2017$vrednost.placila / 1000)) + 
   geom_col() + 
@@ -18,13 +23,14 @@ graf_promet <- ggplot(promet_2017, aes(x = promet_2017$mesec.dostave, y = promet
   scale_x_continuous(breaks = 1:12, labels = meseci ) +
   theme(axis.text.x = element_text(angle = 90))
 
-graf_tipi <- ggplot(narocila, aes(narocila$tip.placila)) + 
+graf_tipi <- ggplot(narocila, aes(tipi[narocila$tip.placila])) + 
   geom_bar() +
   labs(title = "Plačilna sredstva", x = "Tip plačilnega sredstva", y = "Število nakupov") + 
   scale_x_discrete() + 
   coord_flip() 
 
-graf_gostot <- ggplot(narocila, aes(x = narocila$vrednost.placila, color=narocila$tip.placila)) +
+
+graf_gostot <- ggplot(narocila, aes(x = narocila$vrednost.placila, color=tipi[narocila$tip.placila])) +
   geom_density()  +
   scale_x_log10(labels=scales::comma_format(big.mark="")) +
   labs(title = "Gostota cen glede na plačilno sredstvo", x = "Gostota", y = "Gostota plačil", color="Tip plačila") 
